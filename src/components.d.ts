@@ -10,20 +10,32 @@ export namespace Components {
         /**
           * @default false
          */
+        "block": boolean;
+        /**
+          * @default false
+         */
         "disabled": boolean;
+        /**
+          * @default false
+         */
+        "isIcon": boolean;
+        /**
+          * @default 'primary'
+         */
+        "palette": 'primary' | 'secondary';
         "setFocus": () => Promise<void>;
         /**
-          * @default 'md'
+          * @default 'base'
          */
-        "size": 'sm' | 'md' | 'lg';
+        "size": 'xs' | 'sm' | 'base' | 'lg';
         /**
           * @default 'button'
          */
         "type": 'button' | 'submit' | 'reset';
         /**
-          * @default 'primary'
+          * @default 'solid'
          */
-        "variant": 'primary' | 'secondary' | 'danger';
+        "variant": 'solid' | 'soft' | 'link' | 'outline';
     }
     interface MyComponent {
         /**
@@ -72,19 +84,31 @@ declare namespace LocalJSX {
         /**
           * @default false
          */
+        "block"?: boolean;
+        /**
+          * @default false
+         */
         "disabled"?: boolean;
         /**
-          * @default 'md'
+          * @default false
          */
-        "size"?: 'sm' | 'md' | 'lg';
+        "isIcon"?: boolean;
+        /**
+          * @default 'primary'
+         */
+        "palette"?: 'primary' | 'secondary';
+        /**
+          * @default 'base'
+         */
+        "size"?: 'xs' | 'sm' | 'base' | 'lg';
         /**
           * @default 'button'
          */
         "type"?: 'button' | 'submit' | 'reset';
         /**
-          * @default 'primary'
+          * @default 'solid'
          */
-        "variant"?: 'primary' | 'secondary' | 'danger';
+        "variant"?: 'solid' | 'soft' | 'link' | 'outline';
     }
     interface MyComponent {
         /**
@@ -104,10 +128,13 @@ declare namespace LocalJSX {
     }
 
     interface MyButtonAttributes {
-        "variant": 'primary' | 'secondary' | 'danger';
-        "size": 'sm' | 'md' | 'lg';
+        "palette": 'primary' | 'secondary';
+        "variant": 'solid' | 'soft' | 'link' | 'outline';
+        "size": 'xs' | 'sm' | 'base' | 'lg';
         "disabled": boolean;
         "type": 'button' | 'submit' | 'reset';
+        "block": boolean;
+        "isIcon": boolean;
     }
     interface MyComponentAttributes {
         "first": string;

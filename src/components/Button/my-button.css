@@ -1,35 +1,82 @@
-@import '../../../node_modules/tailwindcss/index.css';
+@import '../../global/tokens.css' reference;
+
+/* ─── Base ───────────────────────────────────────────────────── */
 
 .btn {
-  @apply inline-flex items-center justify-center font-medium rounded cursor-pointer transition-colors text-gray-900;
+  @apply inline-flex flex-shrink-0 cursor-pointer select-none flex-wrap items-center justify-center;
+  @apply text-center no-underline transition duration-200 ease-in-out;
+  @apply h-12 gap-2 rounded-lg border-2 border-transparent px-6 text-base font-medium;
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-30 disabled:shadow-none;
 }
 
-.btn:disabled {
-  @apply opacity-50 cursor-not-allowed;
+/* ─── Palette × Variant ──────────────────────────────────────── */
+
+.btn--primary.btn--solid {
+  @apply bg-primary-600 text-whitely-50;
+  @apply hover:bg-primary-500 hover:text-primary-50 hover:ring-4 hover:ring-primary-100;
+  @apply focus-visible:ring-primary-support-300;
 }
 
-/* Variants */
-.btn--primary {
-  @apply bg-blue-600 text-white hover:bg-blue-700;
+.btn--primary.btn--soft {
+  @apply bg-primary-50 text-primary-700;
+  @apply hover:bg-primary-100 hover:text-primary-600 hover:shadow-none;
+  @apply focus-visible:ring-primary-support-400 focus-visible:ring-offset-0;
+  @apply disabled:opacity-50;
 }
 
-.btn--secondary {
-  @apply bg-gray-100 text-gray-900 hover:bg-gray-200;
+.btn--primary.btn--link {
+  @apply bg-transparent text-primary-600;
+  @apply hover:bg-primary-50 hover:shadow-none;
+  @apply focus-visible:ring-1 focus-visible:ring-offset-0;
+  @apply focus-visible:ring-primary-support-400 focus-visible:border-primary-support-400;
 }
 
-.btn--danger {
-  @apply bg-red-600 text-white hover:bg-red-700;
+.btn--primary.btn--outline {
+  @apply bg-transparent text-primary-600 border-primary-600;
+  @apply hover:bg-primary-50 hover:shadow-none;
+  @apply focus-visible:ring-1 focus-visible:ring-offset-0;
+  @apply focus-visible:border-primary-support-400 focus-visible:ring-primary-support-400;
 }
 
-/* Sizes */
-.btn--sm {
-  @apply px-3 py-1.5 text-sm;
+.btn--secondary.btn--solid {
+  @apply bg-secondary-800 text-secondary-50;
+  @apply hover:bg-secondary-950 hover:text-secondary-100 hover:ring-4 hover:ring-secondary-100;
+  @apply focus-visible:ring-secondary-support-300;
 }
 
-.btn--md {
-  @apply px-4 py-2 text-base;
+.btn--secondary.btn--soft {
+  @apply bg-secondary-50 text-secondary-800;
+  @apply hover:bg-secondary-100 hover:shadow-none;
+  @apply focus-visible:ring-offset-0;
+  @apply disabled:opacity-50;
 }
 
-.btn--lg {
-  @apply px-6 py-3 text-lg;
+.btn--secondary.btn--link {
+  @apply bg-transparent text-secondary-800;
+  @apply hover:bg-secondary-50 hover:shadow-none;
+  @apply focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:border-secondary-support-300;
 }
+
+.btn--secondary.btn--outline {
+  @apply bg-transparent text-secondary-800 border-secondary-800;
+  @apply hover:bg-secondary-100 hover:shadow-none;
+  @apply focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:border-secondary-support-300;
+}
+
+/* ─── Sizes ──────────────────────────────────────────────────── */
+
+.btn--xs   { @apply h-8 rounded px-4 text-sm; }
+.btn--sm   { @apply h-10 rounded-md px-5 text-base; }
+.btn--base { @apply h-12 gap-2 rounded-lg px-6; }
+.btn--lg   { @apply h-13 gap-3 px-7 text-lg; }
+
+/* ─── Modifiers ──────────────────────────────────────────────── */
+
+.btn--block { @apply w-full; }
+
+.btn--icon          { @apply gap-0 px-0; }
+.btn--icon.btn--xs   { @apply w-8; }
+.btn--icon.btn--sm   { @apply w-10; }
+.btn--icon.btn--base { @apply w-12; }
+.btn--icon.btn--lg   { @apply w-14; }

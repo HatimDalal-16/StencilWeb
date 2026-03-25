@@ -1,35 +1,31 @@
-/* Update this in src/global/app.css */
-@import '../../node_modules/tailwindcss/index.css';
+@import './tokens.css';
 
-:root {
-  /* Colors */
-  --ds-primary: #0066cc;
-  --ds-secondary: #6c757d;
-  --ds-success: #28a745;
-  --ds-danger: #dc3545;
-  --ds-warning: #ffc107;
+@source '../../src/**/*.html';
 
-  /* Typography */
-  --ds-font-family: 'Inter', system-ui, sans-serif;
-  --ds-font-size-sm: 14px;
-  --ds-font-size-md: 16px;
-  --ds-font-size-lg: 20px;
+/* ─── Keyframes (page-level only) ────────────────────────── */
+@keyframes hide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 
-  /* Spacing */
-  --ds-space-xs: 4px;
-  --ds-space-sm: 8px;
-  --ds-space-md: 16px;
-  --ds-space-lg: 24px;
-  --ds-space-xl: 32px;
+@keyframes slideIn {
+  from {
+    transform: translateX(calc(100% + 1rem));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
 
-  /* Border Radius */
-  --ds-radius-sm: 4px;
-  --ds-radius-md: 8px;
-  --ds-radius-lg: 16px;
-  --ds-radius-full: 9999px;
-
-  /* Shadows */
-  --ds-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
-  --ds-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --ds-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+@keyframes swipeOut {
+  from {
+    transform: translateX(var(--radix-toast-swipe-end-x));
+  }
+  to {
+    transform: translateX(calc(100% + 1rem));
+  }
 }

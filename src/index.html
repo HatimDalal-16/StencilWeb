@@ -12,11 +12,28 @@
   <body>
     <my-component first="Stencil" middle="'Don't call me a framework'" last="JS"></my-component>
     <h1 class="text-3xl font-bold underline">hello</h1>
-    <div class="text-red-600">
+    <div class="text-red-600 flex flex-col gap-4">
       <p>hello</p>
-      <my-button variant="asd" size="lg">Primary</my-button>
-      <my-button variant="secondary" size="md">Secondary</my-button>
-      <my-button variant="danger" size="sm" disabled>Disabled</my-button>
+      <div class="flex flex-col gap-4 pl-10">
+        <div class="flex gap-4">
+          <my-button palette="primary" variant="solid" size="lg">Primary</my-button>
+          <my-button palette="primary" variant="soft" size="lg">Primary</my-button>
+          <my-button palette="primary" variant="link" size="lg">Primary</my-button>
+          <my-button palette="primary" variant="outline" size="lg">Primary</my-button>
+        </div>
+        <div>
+          <my-button palette="secondary" variant="solid" size="md">Secondary</my-button>
+          <my-button palette="secondary" variant="soft" size="md">Secondary</my-button>
+          <my-button palette="secondary" variant="link" size="md">Secondary</my-button>
+          <my-button palette="secondary" variant="outline" size="md">Secondary</my-button>
+        </div>
+        <div>
+          <my-button palette="danger" variant="solid" size="sm" disabled>Disabled</my-button>
+          <my-button palette="danger" variant="soft" size="sm" disabled>Disabled</my-button>
+          <my-button palette="danger" variant="link" size="sm" disabled>Disabled</my-button>
+          <my-button palette="danger" variant="outline" size="sm" disabled>Disabled</my-button>
+        </div>
+      </div>
       <tester-page> </tester-page>
     </div>
   </body>
