@@ -36,13 +36,25 @@
     "start": "stencil build --dev --watch --serve",
     "test": "stencil-test",
     "test:watch": "stencil-test --watch",
-    "generate": "stencil generate"
+    "generate": "stencil generate",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "dev": "concurrently \"npm run start\" \"npm run storybook\""
   },
   "devDependencies": {
+    "@stencil-community/postcss": "^2.2.0",
     "@stencil/core": "^4.27.1",
     "@stencil/vitest": "^1.8.3",
+    "@storybook/addon-docs": "^10.3.3",
+    "@storybook/web-components-vite": "^10.3.3",
+    "@tailwindcss/postcss": "^4.2.2",
     "@types/node": "^22.13.5",
     "@vitest/browser-playwright": "^4.0.0",
+    "concurrently": "^9.2.1",
+    "postcss": "^8.5.8",
+    "storybook": "^10.3.3",
+    "tailwindcss": "^4.2.2",
+    "tslib": "^2.8.1",
     "vitest": "^4.0.0"
   },
   "license": "MIT"

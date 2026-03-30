@@ -6,6 +6,25 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface MyButton {
+        /**
+          * @default false
+         */
+        "disabled": boolean;
+        "setFocus": () => Promise<void>;
+        /**
+          * @default 'md'
+         */
+        "size": 'sm' | 'md' | 'lg';
+        /**
+          * @default 'button'
+         */
+        "type": 'button' | 'submit' | 'reset';
+        /**
+          * @default 'primary'
+         */
+        "variant": 'primary' | 'secondary' | 'danger';
+    }
     interface MyComponent {
         /**
           * The first name
@@ -20,19 +39,53 @@ export namespace Components {
          */
         "middle": string;
     }
+    interface TesterPage {
+    }
 }
 declare global {
+    interface HTMLMyButtonElement extends Components.MyButton, HTMLStencilElement {
+    }
+    var HTMLMyButtonElement: {
+        prototype: HTMLMyButtonElement;
+        new (): HTMLMyButtonElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLTesterPageElement extends Components.TesterPage, HTMLStencilElement {
+    }
+    var HTMLTesterPageElement: {
+        prototype: HTMLTesterPageElement;
+        new (): HTMLTesterPageElement;
+    };
     interface HTMLElementTagNameMap {
+        "my-button": HTMLMyButtonElement;
         "my-component": HTMLMyComponentElement;
+        "tester-page": HTMLTesterPageElement;
     }
 }
 declare namespace LocalJSX {
+    interface MyButton {
+        /**
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * @default 'md'
+         */
+        "size"?: 'sm' | 'md' | 'lg';
+        /**
+          * @default 'button'
+         */
+        "type"?: 'button' | 'submit' | 'reset';
+        /**
+          * @default 'primary'
+         */
+        "variant"?: 'primary' | 'secondary' | 'danger';
+    }
     interface MyComponent {
         /**
           * The first name
@@ -47,7 +100,15 @@ declare namespace LocalJSX {
          */
         "middle"?: string;
     }
+    interface TesterPage {
+    }
 
+    interface MyButtonAttributes {
+        "variant": 'primary' | 'secondary' | 'danger';
+        "size": 'sm' | 'md' | 'lg';
+        "disabled": boolean;
+        "type": 'button' | 'submit' | 'reset';
+    }
     interface MyComponentAttributes {
         "first": string;
         "middle": string;
@@ -55,14 +116,18 @@ declare namespace LocalJSX {
     }
 
     interface IntrinsicElements {
+        "my-button": Omit<MyButton, keyof MyButtonAttributes> & { [K in keyof MyButton & keyof MyButtonAttributes]?: MyButton[K] } & { [K in keyof MyButton & keyof MyButtonAttributes as `attr:${K}`]?: MyButtonAttributes[K] } & { [K in keyof MyButton & keyof MyButtonAttributes as `prop:${K}`]?: MyButton[K] };
         "my-component": Omit<MyComponent, keyof MyComponentAttributes> & { [K in keyof MyComponent & keyof MyComponentAttributes]?: MyComponent[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `attr:${K}`]?: MyComponentAttributes[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `prop:${K}`]?: MyComponent[K] };
+        "tester-page": TesterPage;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "my-button": LocalJSX.IntrinsicElements["my-button"] & JSXBase.HTMLAttributes<HTMLMyButtonElement>;
             "my-component": LocalJSX.IntrinsicElements["my-component"] & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "tester-page": LocalJSX.IntrinsicElements["tester-page"] & JSXBase.HTMLAttributes<HTMLTesterPageElement>;
         }
     }
 }

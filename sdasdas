@@ -1,0 +1,224 @@
+ How Stencil Actually Works — The Full Mental Model
+
+  1. The Big Picture: What Stencil IS
+
+  Stencil is not a framework. It is a compiler.
+
+  You write components in TypeScript + JSX. Stencil compiles them into native Web Components — a browser standard. That output has zero dependency on
+  Stencil at runtime.
+
+  Your Code (TypeScript + JSX)
+          ↓
+     Stencil Compiler
+          ↓
+  Native Web Components (plain JS, works everywhere)
+
+  This is why companies like Ionic, Adobe (Spectrum), and Microsoft (FAST) use it for design systems — you build once, ship to React, Angular, Vue, or plain
+   HTML. No framework lock-in.
+
+  ---
+  2. Web Components — The Browser Standard Stencil Compiles To
+
+  The browser natively supports 3 technologies that make Web Components possible:
+
+  ┌─────────────────┬───────────────────────────────────────────────────────────────────────┐
+  │   Technology    │                             What it does                              │
+  ├─────────────────┼───────────────────────────────────────────────────────────────────────┤
+  │ Custom Elements │ Lets you define <my-button> as a real HTML tag                        │
+  ├─────────────────┼───────────────────────────────────────────────────────────────────────┤
+  │ Shadow DOM      │ Encapsulates styles — your CSS can't leak out, page CSS can't leak in │
+  ├─────────────────┼───────────────────────────────────────────────────────────────────────┤
+  │ HTML Templates  │ Efficient DOM stamping                                                │
+  └─────────────────┴───────────────────────────────────────────────────────────────────────┘
+
+  Stencil writes all that boilerplate for you. You just write the logic.
+
+  ---
+  3. The Anatomy of a Stencil Component
+
+  Every component is a TypeScript class decorated with decorators that tell the compiler what to do.
+
+  import { Component, Prop, State, Event, EventEmitter, Listen, h } from '@stencil/core';
+
+  @Component({
+    tag: 'my-button',        // → the HTML tag name (must have a dash)
+    styleUrl: 'my-button.css', // → scoped CSS file
+    shadow: true,            // → enables Shadow DOM isolation
+  })
+  export class MyButton {
+
+    // ─── INPUTS FROM OUTSIDE ────────────────────────────────
+    @Prop() label: string;        // <my-button label="Click me">
+    @Prop() disabled: boolean = false;
+
+    // ─── INTERNAL STATE (triggers re-render when changed) ───
+    @State() clickCount: number = 0;
+
+    // ─── OUTPUTS (events this component fires) ───────────────
+    @Event() buttonClicked: EventEmitter<number>;
+
+    // ─── LIFECYCLE HOOKS ─────────────────────────────────────
+    componentDidLoad() {
+      // runs once after first render — like useEffect(fn, [])
+    }
+
+    // ─── METHODS ─────────────────────────────────────────────
+    handleClick() {
+      this.clickCount++;                        // @State change → auto re-render
+      this.buttonClicked.emit(this.clickCount); // fire event up to parent
+    }
+
+    // ─── TEMPLATE (what gets rendered as HTML) ────────────────
+    render() {
+      return (
+        <button disabled={this.disabled} onClick={() => this.handleClick()}>
+          {this.label} — clicked {this.clickCount} times
+        </button>
+      );
+    }
+  }
+
+  The 5 Core Decorators You Must Master
+
+  @Component  → class-level config (tag, styles, shadow)
+  @Prop       → INPUT  — data flows IN  (parent → component)
+  @State      → INTERNAL — reactive data, triggers re-render
+  @Event      → OUTPUT — data flows OUT (component → parent)
+  @Listen     → LISTENER — reacts to events from children
+
+  ---
+  4. How the Render Cycle Works
+
+  This is the heart of Stencil. Understanding this = understanding reactivity.
+
+  Initial load
+      │
+      ▼
+  componentWillLoad()   ← async allowed, delays first render
+      │
+      ▼
+  render()              ← returns JSX → becomes real DOM
+      │
+      ▼
+  componentDidLoad()    ← DOM is ready, refs available
+      │
+      ▼
+      ┌─────────────────────────────────┐
+      │  @Prop or @State changes        │
+      │         │                       │
+      │         ▼                       │
+      │  componentShouldUpdate()        │ ← can block re-render
+      │         │                       │
+      │         ▼                       │
+      │  componentWillUpdate()          │
+      │         │                       │
+      │         ▼                       │
+      │      render()                   │ ← virtual DOM diff
+      │         │                       │
+      │         ▼                       │
+      │  componentDidUpdate()           │
+      └─────────────────────────────────┘
+
+  Key rule: Only @Prop and @State changes trigger re-renders. A plain this.myVar = x does nothing. You must use @State for reactive data.
+
+  ---
+  5. Shadow DOM — Why It Matters for Design Systems
+
+  Page DOM
+  │
+  ├── <header>
+  ├── <my-button>        ← your custom element
+  │       #shadow-root   ← THE WALL — nothing crosses this
+  │           <button class="btn">Click</button>
+  │
+  └── <footer>
+
+  - Page CSS targeting .btn will NOT affect your button's internal .btn
+  - Your button's CSS targeting .btn will NOT affect the page's .btn
+  - This is why design systems love Shadow DOM — guaranteed visual consistency
+
+  The host element (<my-button> itself) is the bridge. You can style it from outside using CSS custom properties (design tokens):
+
+  /* Page CSS — crossing the shadow boundary via CSS variables */
+  my-button {
+    --button-color: hotpink;
+  }
+
+  /* Inside the component */
+  button {
+    background: var(--button-color, blue); /* fallback to blue */
+  }
+
+  ---
+  6. How a Design System is Structured with Stencil
+
+  A design system is just a published npm package of components. Here's the architecture:
+
+  my-design-system/
+  ├── src/
+  │   ├── components/
+  │   │   ├── button/          ← ds-button
+  │   │   ├── input/           ← ds-input
+  │   │   ├── card/            ← ds-card
+  │   │   └── modal/           ← ds-modal
+  │   └── global/
+  │       └── tokens.css       ← design tokens (colors, spacing, typography)
+  ├── stencil.config.ts        ← outputs: dist + custom-elements
+  └── package.json             ← published to npm
+
+  Design tokens are the foundation — CSS custom properties that all components reference:
+
+  /* tokens.css */
+  :root {
+    --color-primary: #0070f3;
+    --color-danger:  #e00;
+    --spacing-sm:    8px;
+    --spacing-md:    16px;
+    --radius-md:     8px;
+    --font-body:     'Inter', sans-serif;
+  }
+
+  Every component uses tokens instead of hardcoded values. Change a token → every component updates. That's the power.
+
+  ---
+  7. The Build Output — What Gets Distributed
+
+  Your stencil.config.ts produces two outputs:
+
+  dist/                    ← full package (lazy-loading, works in any app)
+    └── my-stencil-learn.esm.js  ← loads only components used on the page
+
+  dist/components/         ← individual components (tree-shakeable)
+    └── my-button.js       ← import just this one component
+
+  A React app can use your design system like:
+  import { MyButton } from 'my-design-system/my-button';
+
+  An Angular app, Vue app, or plain HTML page can all use the exact same built output.
+
+  ---
+  8. The God-Level Roadmap
+
+  Here's what mastery looks like, in order:
+
+  Level 1 — Components
+    @Component, @Prop, render(), CSS scoping
+
+  Level 2 — Reactivity
+    @State, lifecycle hooks, conditional rendering, lists
+
+  Level 3 — Communication
+    @Event, @EventEmitter, @Listen, @Method (expose public API)
+
+  Level 4 — Design Tokens
+    CSS custom properties, global styles, theming
+
+  Level 5 — Component Composition
+    slots (<slot>), named slots, slot fallbacks
+
+  Level 6 — Advanced Patterns
+    @Element (ref to host), @Watch (react to Prop changes),
+    Stencil stores (cross-component state), portals
+
+  Level 7 — Distribution
+    npm publish, React/Angular/Vue wrappers, Storybook integration

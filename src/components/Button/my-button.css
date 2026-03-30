@@ -1,0 +1,35 @@
+@import '../../../node_modules/tailwindcss/index.css';
+
+.btn {
+  @apply inline-flex items-center justify-center font-medium rounded cursor-pointer transition-colors text-gray-900;
+}
+
+.btn:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Variants */
+.btn--primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700;
+}
+
+.btn--secondary {
+  @apply bg-gray-100 text-gray-900 hover:bg-gray-200;
+}
+
+.btn--danger {
+  @apply bg-red-600 text-white hover:bg-red-700;
+}
+
+/* Sizes */
+.btn--sm {
+  @apply px-3 py-1.5 text-sm;
+}
+
+.btn--md {
+  @apply px-4 py-2 text-base;
+}
+
+.btn--lg {
+  @apply px-6 py-3 text-lg;
+}

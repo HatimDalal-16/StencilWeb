@@ -1,14 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html dir="ltr" lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
     <title>Stencil Component Starter</title>
+    <link rel="stylesheet" href="/build/buttondesignsystem.css" />
 
     <script type="module" src="/build/buttondesignsystem.esm.js"></script>
     <script nomodule src="/build/buttondesignsystem.js"></script>
   </head>
   <body>
     <my-component first="Stencil" middle="'Don't call me a framework'" last="JS"></my-component>
+    <h1 class="text-3xl font-bold underline">hello</h1>
+    <div class="text-red-600">
+      <p>hello</p>
+      <my-button variant="asd" size="lg">Primary</my-button>
+      <my-button variant="secondary" size="md">Secondary</my-button>
+      <my-button variant="danger" size="sm" disabled>Disabled</my-button>
+      <tester-page> </tester-page>
+    </div>
   </body>
 </html>
