@@ -1,8 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(npm ls:*)",
-      "Bash(\"C:\\\\Hatim\\\\Stencil Learn\\\\StencilSelf\\\\buttondesignsystem\\\\src\\\\components\\\\Button\\\\my-button.css\":*)"
-    ]
+    "allow": ["Bash(npm ls:*)", "Bash(\"C:\\\\Hatim\\\\Stencil Learn\\\\StencilSelf\\\\buttondesignsystem\\\\src\\\\components\\\\Button\\\\my-button.css\":*)"]
   }
 }

@@ -66,17 +66,37 @@
 
 /* ─── Sizes ──────────────────────────────────────────────────── */
 
-.btn--xs   { @apply h-8 rounded px-4 text-sm; }
-.btn--sm   { @apply h-10 rounded-md px-5 text-base; }
-.btn--base { @apply h-12 gap-2 rounded-lg px-6; }
-.btn--lg   { @apply h-13 gap-3 px-7 text-lg; }
+.btn--xs {
+  @apply h-8 rounded px-4 text-sm;
+}
+.btn--sm {
+  @apply h-10 rounded-md px-5 text-base;
+}
+.btn--base {
+  @apply h-12 gap-2 rounded-lg px-6;
+}
+.btn--lg {
+  @apply h-13 gap-3 px-7 text-lg;
+}
 
 /* ─── Modifiers ──────────────────────────────────────────────── */
 
-.btn--block { @apply w-full; }
+.btn--block {
+  @apply w-full;
+}
 
-.btn--icon          { @apply gap-0 px-0; }
-.btn--icon.btn--xs   { @apply w-8; }
-.btn--icon.btn--sm   { @apply w-10; }
-.btn--icon.btn--base { @apply w-12; }
-.btn--icon.btn--lg   { @apply w-14; }
+.btn--icon {
+  @apply gap-0 px-0;
+}
+.btn--icon.btn--xs {
+  @apply w-8;
+}
+.btn--icon.btn--sm {
+  @apply w-10;
+}
+.btn--icon.btn--base {
+  @apply w-12;
+}
+.btn--icon.btn--lg {
+  @apply w-14;
+}
