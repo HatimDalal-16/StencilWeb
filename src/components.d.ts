@@ -7,6 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface MyButton {
+        "ariaLabel": string;
         /**
           * @default false
          */
@@ -19,6 +20,10 @@ export namespace Components {
           * @default false
          */
         "isIcon": boolean;
+        /**
+          * @default false
+         */
+        "loading": boolean;
         /**
           * @default 'primary'
          */
@@ -81,6 +86,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface MyButton {
+        "ariaLabel"?: string;
         /**
           * @default false
          */
@@ -93,6 +99,10 @@ declare namespace LocalJSX {
           * @default false
          */
         "isIcon"?: boolean;
+        /**
+          * @default false
+         */
+        "loading"?: boolean;
         /**
           * @default 'primary'
          */
@@ -132,9 +142,11 @@ declare namespace LocalJSX {
         "variant": 'solid' | 'soft' | 'link' | 'outline';
         "size": 'xs' | 'sm' | 'base' | 'lg';
         "disabled": boolean;
+        "loading": boolean;
         "type": 'button' | 'submit' | 'reset';
         "block": boolean;
         "isIcon": boolean;
+        "ariaLabel": string;
     }
     interface MyComponentAttributes {
         "first": string;
