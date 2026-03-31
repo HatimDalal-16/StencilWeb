@@ -37,9 +37,9 @@
     "test": "stencil-test",
     "test:watch": "stencil-test --watch",
     "generate": "stencil generate",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6007",
     "build-storybook": "storybook build",
-    "dev": "concurrently \"npm run start\" \"npm run storybook\""
+    "dev": "stencil build && concurrently \"npm run start\" \"npm run storybook\""
   },
   "devDependencies": {
     "@stencil-community/postcss": "^2.2.0",

@@ -4,7 +4,7 @@
 
 **Goal:** Integrate Storybook (`@storybook/web-components-vite`) into the project so `my-button` has a live dev sandbox and auto-generated documentation with Controls.
 
-**Architecture:** Storybook runs as a separate dev server (port 6006) alongside Stencil's watch server (port 3333). `preview.ts` imports the Stencil `dist-custom-elements` build so `my-button` self-registers before any story renders. A `concurrently` script (`npm run dev`) starts both servers in one terminal.
+**Architecture:** Storybook runs as a separate dev server (port 6007) alongside Stencil's watch server (port 3333). `preview.ts` imports the Stencil `dist-custom-elements` build so `my-button` self-registers before any story renders. A `concurrently` script (`npm run dev`) starts both servers in one terminal.
 
 **Tech Stack:** Storybook 8, `@storybook/web-components-vite`, `@storybook/addon-docs`, `concurrently`, Stencil 4, Tailwind CSS 4.
 
@@ -12,18 +12,19 @@
 
 ## File Map
 
-| Action | Path | Responsibility |
-|--------|------|----------------|
-| Create | `.storybook/main.ts` | Storybook config: framework, addons, stories glob |
-| Create | `.storybook/preview.ts` | Import built component bundle; global Storybook parameters |
-| Create | `src/components/Button/my-button.stories.ts` | All button stories (variants, sizes, disabled) |
-| Modify | `package.json` | Add `storybook`, `build-storybook`, `dev` scripts |
+| Action | Path                                         | Responsibility                                             |
+| ------ | -------------------------------------------- | ---------------------------------------------------------- |
+| Create | `.storybook/main.ts`                         | Storybook config: framework, addons, stories glob          |
+| Create | `.storybook/preview.ts`                      | Import built component bundle; global Storybook parameters |
+| Create | `src/components/Button/my-button.stories.ts` | All button stories (variants, sizes, disabled)             |
+| Modify | `package.json`                               | Add `storybook`, `build-storybook`, `dev` scripts          |
 
 ---
 
 ## Task 1: Install Dependencies
 
 **Files:**
+
 - Modify: `package.json` (devDependencies — updated by npm automatically)
 
 - [ ] **Step 1: Install Storybook packages and concurrently**
@@ -56,6 +57,7 @@ git commit -m "chore: install storybook and concurrently dependencies"
 ## Task 2: Create `.storybook/main.ts`
 
 **Files:**
+
 - Create: `.storybook/main.ts`
 
 - [ ] **Step 1: Create the file**
@@ -89,6 +91,7 @@ git commit -m "chore: add storybook main config"
 ## Task 3: Create `.storybook/preview.ts`
 
 **Files:**
+
 - Create: `.storybook/preview.ts`
 
 - [ ] **Step 1: Do an initial Stencil build so `dist/components/` exists**
@@ -135,6 +138,7 @@ git commit -m "chore: add storybook preview config with my-button import"
 ## Task 4: Add npm Scripts
 
 **Files:**
+
 - Modify: `package.json` (the `"scripts"` section)
 
 - [ ] **Step 1: Add the three new scripts**
@@ -148,7 +152,7 @@ In `package.json`, update the `"scripts"` block to add `storybook`, `build-story
   "test": "stencil-test",
   "test:watch": "stencil-test --watch",
   "generate": "stencil generate",
-  "storybook": "storybook dev -p 6006",
+  "storybook": "storybook dev -p 6007",
   "build-storybook": "storybook build",
   "dev": "concurrently \"npm run start\" \"npm run storybook\""
 }
@@ -174,6 +178,7 @@ git commit -m "chore: add storybook and dev npm scripts"
 ## Task 5: Write `my-button.stories.ts`
 
 **Files:**
+
 - Create: `src/components/Button/my-button.stories.ts`
 
 - [ ] **Step 1: Create the stories file**
@@ -192,8 +197,7 @@ type ButtonArgs = {
 const meta: Meta<ButtonArgs> = {
   title: 'Components/Button',
   tags: ['autodocs'],
-  render: (args) =>
-    `<my-button variant="${args.variant}" size="${args.size}" ${args.disabled ? 'disabled' : ''}>Click me</my-button>`,
+  render: args => `<my-button variant="${args.variant}" size="${args.size}" ${args.disabled ? 'disabled' : ''}>Click me</my-button>`,
   argTypes: {
     variant: {
       control: 'select',
@@ -266,7 +270,8 @@ git commit -m "feat: add my-button stories (variants, sizes, disabled)"
 npm run storybook
 ```
 
-Expected: Storybook opens at `http://localhost:6006`. You should see:
+Expected: Storybook opens at `http://localhost:6007`. You should see:
+
 - A `Components/Button` entry in the sidebar
 - An `Autodocs` page with the Controls table showing `variant`, `size`, and `disabled`
 - Seven stories: Primary, Secondary, Danger, Small, Medium, Large, Disabled
@@ -284,7 +289,7 @@ Stop Storybook (Ctrl+C), then run:
 npm run dev
 ```
 
-Expected: both Stencil (port 3333) and Storybook (port 6006) start concurrently in the same terminal. No port conflicts.
+Expected: both Stencil (port 3333) and Storybook (port 6007) start concurrently in the same terminal. No port conflicts.
 
 - [ ] **Step 4: Final commit**
 
@@ -297,9 +302,9 @@ git commit -m "feat: storybook integration complete for my-button"
 
 ## Dev Workflow (for reference)
 
-| Command | What it does |
-|---------|-------------|
-| `npm run dev` | Start Stencil watch + Storybook together |
-| `npm run storybook` | Start Storybook only (needs existing dist/) |
+| Command                   | What it does                                  |
+| ------------------------- | --------------------------------------------- |
+| `npm run dev`             | Start Stencil watch + Storybook together      |
+| `npm run storybook`       | Start Storybook only (needs existing dist/)   |
 | `npm run build-storybook` | Build static Storybook to `storybook-static/` |
-| `npm run build` | Rebuild dist/ after component changes |
+| `npm run build`           | Rebuild dist/ after component changes         |

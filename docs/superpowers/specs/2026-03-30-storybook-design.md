@@ -31,7 +31,7 @@ docs/
 New npm scripts in `package.json`:
 
 ```json
-"storybook": "storybook dev -p 6006",
+"storybook": "storybook dev -p 6007",
 "build-storybook": "storybook build",
 "dev": "concurrently \"npm run start\" \"npm run storybook\""
 ```
@@ -57,7 +57,7 @@ Each story renders `<my-button>` via an HTML template string with slot text "Cli
 
 - Storybook imports from the `dist-custom-elements` output target (auto-defines components on import)
 - `preview.ts` imports the bundle so `my-button` is registered before any story renders
-- Dev workflow uses `concurrently` to run Stencil watch (`npm start`, port 3333) and Storybook dev server (`npm run storybook`, port 6006) in parallel via `npm run dev`
+- Dev workflow uses `concurrently` to run Stencil watch (`npm start`, port 3333) and Storybook dev server (`npm run storybook`, port 6007) in parallel via `npm run dev`
 - Stencil rebuilds on component changes; Storybook hot-reloads automatically
 
 ## What's Not Included
